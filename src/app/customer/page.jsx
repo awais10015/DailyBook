@@ -1,8 +1,8 @@
 import React from 'react'
-import Users from './Users'
+import Customer from './Customer'
 const page = () => {
   return (
-    <Users/>
+    <Customer/>
   )
 }
 

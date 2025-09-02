@@ -1,6 +1,6 @@
 "use client"
 
-import { UsersRound, House, LayoutDashboard } from "lucide-react";
+import { ChartColumnStacked, User , UserStar , ReceiptText, Calculator} from "lucide-react";
 import Image from "next/image";
 import {
   Sidebar,
@@ -17,20 +17,31 @@ import { usePathname } from "next/navigation";
 
 // Menu items.
 const items = [
-  {
-    title: "Home",
-    url: "/",
-    icon: House,
-  },
+  
   {
     title: "Dashboard",
     url: "/dashboard",
-    icon: LayoutDashboard,
+    icon: ChartColumnStacked,
   },
   {
-    title: "Users",
-    url: "/users",
-    icon: UsersRound,
+    title: "Customer",
+    url: "/customer",
+    icon: User,
+  },
+  {
+    title: "Supplier",
+    url: "/supplier",
+    icon: UserStar,
+  },
+  {
+    title: "Invoice",
+    url: "/invoice",
+    icon: ReceiptText,
+  },
+  {
+    title: "Daily Expense",
+    url: "/dailyexpense",
+    icon: Calculator,
   },
 ];
 
@@ -40,18 +51,16 @@ export function AppSidebar() {
   return (
     <Sidebar className="bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 h-screen shadow-md">
       {/* Logo/Header */}
-      <SidebarHeader className="p-6 border-b border-gray-200 dark:border-gray-800">
-        <div className="flex gap-4 items-center">
-          <Image src={"/logo.svg"} height={40} width={40} alt="logo" />
-          <h1 className="text-xl font-semibold text-gray-800 dark:text-gray-100">
-            Dashboard
-          </h1>
+      <SidebarHeader className="px-6 h-[70px] border-b bg-[#53b700]/10  border-gray-200 dark:border-gray-800">
+        <div className="flex items-center">
+          <Image src={"/logo.svg"} height={70} width={170} alt="logo" />
+          
         </div>
       </SidebarHeader>
 
       {/* Menu */}
-      <SidebarContent className="p-4">
-        <SidebarMenu className="space-y-2">
+      <SidebarContent className="">
+        <SidebarMenu className="">
           {items.map((item) => {
             const isActive = pathname === item.url;
             return (
@@ -59,13 +68,13 @@ export function AppSidebar() {
                 <SidebarMenuButton asChild>
                   <a
                     href={item.url}
-                    className={`flex items-center gap-3 rounded-xl px-4 py-2 text-sm font-medium transition-all ${
+                    className={`flex items-center h-[60px] pl-5 text-sm rounded-none font-medium transition-all ${
                       isActive
-                        ? "bg-blue-600 text-white shadow-md"
+                        ? "bg-[#53b700] hover:bg-[#53b700] text-white shadow-md"
                         : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
                     }`}
                   >
-                    <item.icon className="h-5 w-5" />
+                    <item.icon />
                     <span>{item.title}</span>
                   </a>
                 </SidebarMenuButton>

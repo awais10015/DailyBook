@@ -3,18 +3,36 @@ import React, { useState } from "react";
 import { Menu, Eye, EyeOff } from "lucide-react";
 import { SidebarTrigger } from "./ui/sidebar"; // ShadCN's trigger
 import { ModeToggle } from "./ModeToggle";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
   const [blurActive, setBlurActive] = useState(false);
+  const pathname = usePathname();
+  const pageName =
+    pathname === "/"
+      ? "Home"
+      : pathname
+          .replace("/", "")
+          .replace("-", " ")
+          .replace(/\b\w/g, (c) => c.toUpperCase()); // Capitalize
 
   return (
     <>
       {/* Navbar */}
-      <nav className="sticky top-0 z-20 w-full h-14 backdrop-blur-md bg-none border-b border-white/20 flex items-center px-4 justify-between">
+      <nav className="sticky top-0 z-20 w-full h-[70px] bg-[#53b700]/10 flex items-center px-4 justify-between">
         {/* Sidebar Button */}
-        {!blurActive && <SidebarTrigger className="size-8" />}
+        {!blurActive ? (
+          <div className=" flex items-center justify-center">
+            <SidebarTrigger className="size-8" />
+          
+            <div className="text-sm font-semibold text-gray-600 dark:text-white">
+              Home {} {} / {} {} {pageName}
+            </div>
+          </div>
+        ) : (
+          <div></div>
+        )}
 
-        <div>{}</div>
         <div className="flex items-center gap-4">
           <button
             onClick={() => setBlurActive(!blurActive)}
@@ -31,7 +49,6 @@ const Navbar = () => {
               alt="Admin Avatar"
               className="w-8 h-8 rounded-full object-cover"
             />
-            <span className="font-medium">Admin</span>
           </div>
         </div>
       </nav>

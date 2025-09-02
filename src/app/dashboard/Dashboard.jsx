@@ -1,190 +1,125 @@
+"use client";
+
 import React from "react";
+import { motion } from "framer-motion";
 
-import {
-  ArrowUp,
-  Banknote,
-  UsersRound,
-  Building2,
-  DollarSign,
-  TicketCheck,
-  ClipboardClock,
-  Trash2,
-  ClockIcon,
-} from "lucide-react";
 
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 
-import { ChartAreaInteractive } from "@/components/charts/AreaChart";
-import { ChartBarStacked } from "@/components/charts/BarChart";
-import { ChartLineMultiple } from "@/components/charts/LineChart";
-import { ChartPieInteractive } from "@/components/charts/PieChart";
-import { ChartRadarLinesOnly } from "@/components/charts/RadarChart";
-import { ChartRadialLabel } from "@/components/charts/RadialChart";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+
+import { ChartBarMultiple } from "@/components/charts/ChartBar";
+import { ChartPieLegend } from "@/components/charts/ChartPie";
+import { CustomerTable } from "@/components/table/Table";
+
+// Animation variants
+const containerVariants = {
+  hidden: {},
+  show: {
+    transition: {
+      staggerChildren: 0.15, // stagger animations of children
+    },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 20, scale: 0.95 },
+  show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.5 } },
+};
+
+const sectionVariants = {
+  hidden: { opacity: 0, y: 30 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+};
 
 const Dashboard = () => {
   return (
-    <div className="p-6 space-y-6">
-      {/* Header */}
-      <h1 className="text-3xl font-bold"> Dashboard</h1>
-
-      {/* Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
-        <Card className="rounded-md">
-          <CardHeader>
-            <CardTitle>
-              <div className="flex items-center justify-start">
-                <div className=" p-3 rounded-md">
-                  <DollarSign size={50} />
-                </div>
-                <div className="text-center">
-                  <h1 className="font-semibold  text-sm">Total Invoices</h1>
-                  <p className="text-lg font-bold ">{"0"}</p>
-                </div>
-              </div>
-            </CardTitle>
-          </CardHeader>
-        </Card>
-
-        <Card className="rounded-md">
-          <CardHeader>
-            <CardTitle>
-              <div className="flex items-center justify-start">
-                <div className=" p-3 rounded-md">
-                  <TicketCheck size={50} />
-                </div>
-                <div className="text-center">
-                  <h1 className="font-semibold  text-sm">Completed Invoices</h1>
-                  <p className="text-lg font-bold ">{"0"}</p>
-                </div>
-              </div>
-            </CardTitle>
-          </CardHeader>
-        </Card>
-
-        <Card className="rounded-md">
-          <CardHeader>
-            <CardTitle>
-              <div className="flex items-center justify-start">
-                <div className=" p-3 rounded-md">
-                  <ClipboardClock size={50} />
-                </div>
-                <div className="text-center">
-                  <h1 className="font-semibold  text-sm">Pending Invoices</h1>
-                  <p className="text-lg font-bold ">{"0"}</p>
-                </div>
-              </div>
-            </CardTitle>
-          </CardHeader>
-        </Card>
-
-        <Card className="rounded-md">
-          <CardHeader>
-            <CardTitle>
-              <div className="flex items-center justify-start">
-                <div className=" p-3 rounded-md">
-                  <Trash2 size={50} className="text-red-500" />
-                </div>
-                <div className="flex flex-col justify-center">
-                  <h1 className="font-semibold whitespace-nowrap text-lg">
-                    Cancel Invoices
-                  </h1>
-                  <p className=" text-sm">0</p>
-                </div>
-              </div>
-            </CardTitle>
-          </CardHeader>
-        </Card>
-      </div>
-
-      {/* Top grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-6">
-          <Card className="rounded-md">
-            <CardHeader>
-              <CardTitle>
-                <div className="flex flex-col items-center justify-start">
-                  <div className=" p-3 rounded-md">
-                    <ArrowUp size={50} />
-                  </div>
+    <motion.div
+      className="w-full p-4 md:p-6 space-y-6"
+      variants={containerVariants}
+      initial="hidden"
+      animate="show"
+    >
+   
+      <motion.div
+        className="w-full flex flex-wrap gap-4 items-center justify-center"
+        variants={containerVariants}
+      >
+        
+          <motion.div className="flex gap-2 flex-wrap">
+            <Card className=" w-[200px] rounded-md bg-[#f0790f]/15">
+              <CardHeader>
+                <CardTitle>
                   <div className="text-center">
-                    <h1 className="font-semibold  text-sm">To Pay</h1>
-                    <p className="text-lg font-bold ">{"$0"}</p>
+                    <h1 className="font-semibold text-sm">Total Invoices</h1>
+                    <p className="text-lg font-bold">0</p>
                   </div>
-                </div>
-              </CardTitle>
-            </CardHeader>
-          </Card>
+                </CardTitle>
+              </CardHeader>
+            </Card>
 
-          <Card className="rounded-md">
-            <CardHeader>
-              <CardTitle>
-                <div className="flex flex-col items-center justify-start">
-                  <div className=" p-3 rounded-md">
-                    <Banknote size={50} />
-                  </div>
-
+            <Card className=" w-[200px] rounded-md bg-[#53b700]/15">
+              <CardHeader>
+                <CardTitle>
                   <div className="text-center">
-                    <h1 className="font-semibold  text-sm">Paid</h1>
-                    <p className="text-lg font-bold ">{"$0"}</p>
+                    <h1 className="font-semibold text-sm">
+                      Completed Invoices
+                    </h1>
+                    <p className="text-lg font-bold">0</p>
                   </div>
-                </div>
-              </CardTitle>
-            </CardHeader>
-          </Card>
+                </CardTitle>
+              </CardHeader>
+            </Card>
 
-          <Card className="rounded-md">
-            <CardHeader>
-              <CardTitle>
-                <div className="flex flex-col items-center justify-start">
-                  <div className=" p-3 rounded-md">
-                    <UsersRound size={50} />
-                  </div>
+            <Card className=" w-[200px] rounded-md bg-[#a8c5da]/15">
+              <CardHeader>
+                <CardTitle>
                   <div className="text-center">
-                    <h1 className="font-semibold  text-sm">Total Customer</h1>
-                    <p className="text-lg font-bold ">{"$0"}</p>
+                    <h1 className="font-semibold text-sm">Pending Invoices</h1>
+                    <p className="text-lg font-bold">0</p>
                   </div>
-                </div>
-              </CardTitle>
-            </CardHeader>
-          </Card>
+                </CardTitle>
+              </CardHeader>
+            </Card>
 
-          <Card className="rounded-md">
-            <CardHeader>
-              <CardTitle>
-                <div className="flex flex-col items-center justify-start">
-                  <div className=" p-3 rounded-md">
-                    <Building2 size={50} />
-                  </div>
+            <Card className=" w-[200px] rounded-md bg-[#ef1775]/15">
+              <CardHeader>
+                <CardTitle>
                   <div className="text-center">
-                    <h1 className="font-semibold  text-sm">Total Companies</h1>
-                    <p className="text-lg font-bold ">$0</p>
+                    <h1 className="font-semibold text-sm">Canceled Invoices</h1>
+                    <p className="text-lg font-bold">0</p>
                   </div>
-                </div>
-              </CardTitle>
-            </CardHeader>
-          </Card>
+                </CardTitle>
+              </CardHeader>
+            </Card>
+          </motion.div>
+        
+      </motion.div>
+
+      <motion.div className="flex flex-col gap-4" variants={sectionVariants}>
+        <div className="flex flex-col gap-2">
+          <h1 className="text-xl font-bold">Welcome to DailyBook</h1>
+          <p className="text-sm text-gray-500">
+            Get the seamless, secure and swift payments made simple
+          </p>
         </div>
+        <div className="w-full">
+          <ChartBarMultiple />
+        </div>
+      </motion.div>
 
-        <ChartPieInteractive />
-      </div>
-      <ChartAreaInteractive />
-      {/* Bottom grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-6">
-        <ChartRadarLinesOnly />
-        <ChartBarStacked />
-
-        <ChartLineMultiple />
-        <ChartRadialLabel />
-      </div>
-    </div>
+    
+      <motion.div
+        className="flex flex-col lg:flex-row gap-6 w-full"
+        variants={sectionVariants}
+      >
+        <div className="w-full lg:w-1/2">
+          <ChartPieLegend />
+        </div>
+        <div className="w-full lg:w-1/2 overflow-x-auto">
+          <CustomerTable />
+        </div>
+      </motion.div>
+    </motion.div>
   );
 };
 

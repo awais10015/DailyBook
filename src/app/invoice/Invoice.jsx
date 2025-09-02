@@ -1018,10 +1018,10 @@ const Invoice = () => {
                               height={150}
                             />
                             <DialogTitle>
-                              Are you sure you want to Delete its Supplier?
+                              Are you sure you want to Delete this {userType}?
                             </DialogTitle>
                             <DialogDescription>
-                              Deleting the supplier will delete its entire
+                              Deleting the {userType} will delete its entire
                               history
                             </DialogDescription>
                           </DialogHeader>

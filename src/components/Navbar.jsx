@@ -1,9 +1,10 @@
 "use client";
 import React, { useState } from "react";
 import { Menu, Eye, EyeOff } from "lucide-react";
-import { SidebarTrigger } from "./ui/sidebar"; // ShadCN's trigger
+import { SidebarTrigger } from "./ui/sidebar"; 
 import { ModeToggle } from "./ModeToggle";
 import { usePathname } from "next/navigation";
+import Logout from "@/components/Logout"
 
 const Navbar = () => {
   const [blurActive, setBlurActive] = useState(false);
@@ -14,13 +15,13 @@ const Navbar = () => {
       : pathname
           .replace("/", "")
           .replace("-", " ")
-          .replace(/\b\w/g, (c) => c.toUpperCase()); // Capitalize
+          .replace(/\b\w/g, (c) => c.toUpperCase()); 
 
   return (
     <>
-      {/* Navbar */}
+     
       <nav className="sticky top-0 z-20 w-full h-[70px] bg-[#53b700]/10 flex items-center px-4 justify-between">
-        {/* Sidebar Button */}
+       
         {!blurActive ? (
           <div className=" flex items-center justify-center">
             <SidebarTrigger className="size-8" />
@@ -50,6 +51,7 @@ const Navbar = () => {
               className="w-8 h-8 rounded-full object-cover"
             />
           </div>
+          <Logout/>
         </div>
       </nav>
 

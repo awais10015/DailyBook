@@ -11,12 +11,12 @@ import { ChartBarMultiple } from "@/components/charts/ChartBar";
 import { ChartPieLegend } from "@/components/charts/ChartPie";
 import { CustomerTable } from "@/components/table/Table";
 
-// Animation variants
+
 const containerVariants = {
   hidden: {},
   show: {
     transition: {
-      staggerChildren: 0.15, // stagger animations of children
+      staggerChildren: 0.15,
     },
   },
 };

@@ -1,5 +1,5 @@
 "use client"
-
+import Link from "next/link";
 import { ChartColumnStacked, User , UserStar , ReceiptText, Calculator} from "lucide-react";
 import Image from "next/image";
 import {
@@ -50,7 +50,7 @@ export function AppSidebar() {
 
   return (
     <Sidebar className="bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 h-screen shadow-md">
-      {/* Logo/Header */}
+     
       <SidebarHeader className="px-6 h-[70px] border-b bg-[#53b700]/10  border-gray-200 dark:border-gray-800">
         <div className="flex items-center">
           <Image src={"/logo.svg"} height={70} width={170} alt="logo" />
@@ -58,7 +58,7 @@ export function AppSidebar() {
         </div>
       </SidebarHeader>
 
-      {/* Menu */}
+   
       <SidebarContent className="">
         <SidebarMenu className="">
           {items.map((item) => {
@@ -66,7 +66,7 @@ export function AppSidebar() {
             return (
               <SidebarMenuItem key={item.title}>
                 <SidebarMenuButton asChild>
-                  <a
+                  <Link
                     href={item.url}
                     className={`flex items-center h-[60px] pl-5 text-sm rounded-none font-medium transition-all ${
                       isActive
@@ -76,7 +76,7 @@ export function AppSidebar() {
                   >
                     <item.icon />
                     <span>{item.title}</span>
-                  </a>
+                  </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             );

@@ -2,8 +2,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import React from "react";
-import { Mail } from "lucide-react"; 
-import { Input } from "@/components/ui/input"; 
+import { Mail } from "lucide-react";
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
@@ -19,7 +19,6 @@ const EmailVerification = () => {
       className="absolute h-screen w-full flex items-center justify-center 
                  bg-[url('/login.svg')] bg-cover bg-center"
     >
-    
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 0.3 }}
@@ -27,19 +26,24 @@ const EmailVerification = () => {
         className="absolute inset-0 bg-black"
       />
 
-     
-      <div className="absolute bottom-0 z-10 flex w-full items-center justify-evenly gap-6 pt-6 px-6">
-       
+      <div className="absolute bottom-0 z-10 flex flex-col md:flex-col lg:flex-row w-full items-center justify-evenly gap-6 pt-6 px-6">
         <motion.div
-          initial={{ x: -80, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8 }}
           className="flex items-center justify-center"
         >
-          <Image src={"/Frame.svg"} height={400} width={400} alt="logo" />
+          <motion.div className="relative h-[300px] w-[300px] md:h-[300px] md:w-[300px] lg:h-[400px] lg:w-[400px]">
+            <Image
+              src="/login/frame.svg"
+              alt="logo"
+              fill
+              className="object-contain"
+              priority
+            />
+          </motion.div>
         </motion.div>
 
-        
         <motion.div
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -56,12 +60,9 @@ const EmailVerification = () => {
               </h1>
             </div>
 
-            {/* Email */}
+            
             <div className="flex flex-col gap-2">
-              <label
-                htmlFor="email"
-                className="text-black font-medium text-sm"
-              >
+              <label htmlFor="email" className="text-black font-medium text-sm">
                 Email
               </label>
               <div className="relative">

@@ -9,6 +9,19 @@ import CurrentUserContext from "@/context/CurrentUserContext";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 
+import {
+  getCookie,
+  getCookies,
+  setCookie,
+  deleteCookie,
+  hasCookie,
+  useGetCookies,
+  useSetCookie,
+  useHasCookie,
+  useDeleteCookie,
+  useGetCookie,
+} from "cookies-next/client";
+
 const Login = () => {
   const router = useRouter();
   const [showPassword, setShowPassword] = React.useState(false);
@@ -23,12 +36,20 @@ const Login = () => {
     password: "asdf",
     name: "Tester",
   };
-
+  useEffect(() => {
+    console.log(currentLoggedInUser);
+  }, [currentLoggedInUser]);
   const handleSubmit = (e) => {
     e.preventDefault();
     if (email === user.email && password === user.password) {
       setCurrentLoggedInUser(user);
-      alert("successfull");
+
+      localStorage.setItem("token", "my-secret-token");
+
+      setCookie("token", "my-secret-token");
+      document.cookie = "token=my-secret-token; path=/;";
+
+      alert("successful");
       router.push("/dashboard");
     } else {
       alert("wrong credentials");
@@ -38,31 +59,38 @@ const Login = () => {
   return (
     <div
       className="absolute h-screen w-full flex items-center justify-center 
-                 bg-[url('/login.svg')] bg-cover bg-center"
+                 bg-[url('/login.svg')] bg-cover bg-center pt-5"
     >
-   
       <div className="absolute inset-0 bg-black/30" />
 
-   
-      <div className="absolute bottom-0 z-10 flex w-full items-center justify-evenly gap-6 pt-6 px-6">
-   
+      <div className="absolute bottom-0 z-10 flex flex-col md:flex-col lg:flex-row w-full items-center justify-evenly gap-6 pt-6 px-6">
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
           className="flex items-center justify-center"
         >
-          <Image src={"/Frame.svg"} height={400} width={400} alt="logo" />
+          <motion.div className="relative h-[200px] w-[200px] md:h-[240px] md:w-[240px] lg:h-[400px] lg:w-[400px]">
+            <Image
+              src="/login/frame.svg"
+              alt="logo"
+              fill
+              className="object-contain"
+              priority
+            />
+          </motion.div>
         </motion.div>
 
-  
         <motion.div
           initial={{ opacity: 0, y: 50, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
           className="flex-1 h-[500px] max-w-md bg-white p-8 shadow-lg rounded-t-2xl"
         >
-          <form className="flex flex-col gap-6 text-black" onSubmit={handleSubmit}>
+          <form
+            className="flex flex-col gap-6 text-black"
+            onSubmit={handleSubmit}
+          >
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -97,7 +125,6 @@ const Login = () => {
               </div>
             </motion.div>
 
-          
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -133,7 +160,6 @@ const Login = () => {
               </div>
             </motion.div>
 
-      
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -148,7 +174,6 @@ const Login = () => {
               </Link>
             </motion.div>
 
-          
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}

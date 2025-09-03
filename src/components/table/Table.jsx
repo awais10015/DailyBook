@@ -99,7 +99,7 @@ export function CustomerTable() {
   return (
     <div className="w-full  overflow-x-auto rounded-2xl border shadow-md">
       <Table className="table-auto w-full border-collapse overflow-hidden scrollbar-hide">
-        {/* Header */}
+       
         <TableHeader >
           <TableRow className="bg-[#54b700]/10 text-md font-bold">
             <TableHead className="py-5 px-5 text-left w-[30%]">
@@ -141,20 +141,13 @@ export function CustomerTable() {
           ))}
         </TableBody>
 
-        {/* Footer */}
+        
         <TableFooter>
-          {/* <TableRow className="border-t">
-            <TableCell colSpan={3} className="py-3 px-2 font-medium">
-              Total
-            </TableCell>
-            <TableCell className="py-4 px-2 text-right font-medium">
-              $2,500.00
-            </TableCell>
-          </TableRow> */}
+        
         </TableFooter>
       </Table>
 
-      {/* Pagination */}
+     
       <div className="flex items-center border-t justify-between px-5 py-5">
         <p className="text-sm text-gray-600">
           Showing {startIndex + 1}–{endIndex} of {totalItems} items

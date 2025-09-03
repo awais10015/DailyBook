@@ -596,7 +596,7 @@ const Invoice = () => {
   };
   return (
     <>
-      {/* Header */}
+      
       <div className="flex items-center justify-between p-8 border-b gap-5">
         <div className="flex flex-col gap-2">
           <h1 className="text-lg font-bold">Invoices</h1>
@@ -723,7 +723,7 @@ const Invoice = () => {
         </Dialog>
       </div>
 
-      {/* Actions */}
+     
       <div className="flex items-center flex-wrap justify-end px-8 py-5 gap-4">
         <div className="relative">
           <Search className="absolute top-2 left-2 text-gray-500" size={20} />
@@ -788,7 +788,7 @@ const Invoice = () => {
         </div>
       </div>
 
-      {/* Table */}
+      
       <div className="w-full px-8">
         <Table className="table-auto w-full border-collapse border-gray-500 overflow-hidden scrollbar-hide rounded-2xl">
           <TableHeader>
@@ -1051,7 +1051,7 @@ const Invoice = () => {
           <TableFooter></TableFooter>
         </Table>
 
-        {/* Pagination */}
+       
         <div className="flex items-center border-t justify-between px-5 py-5">
           <p className="text-sm text-gray-600">
             Showing {startIndex + 1}–{endIndex} of {totalItems} items

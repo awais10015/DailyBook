@@ -1,5 +1,5 @@
 "use client";
-import DetailedTable from "@/components/table/DetailedTable";
+
 import Image from "next/image";
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -537,7 +537,7 @@ const Customer = () => {
 
   const [data, setData] = useState(dummyData);
 
-  // Pagination logic based on data
+  
   const totalItems = data.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
@@ -553,18 +553,18 @@ const Customer = () => {
     );
   };
 
-  // ✅ Deselect all
+  
   const handleDeselect = () => {
     setSelected([]);
   };
 
   const onDelete = (user, selectedUsers = []) => {
     if (user) {
-      // delete single user
+      
       setData((prev) => prev.filter((e) => e.name !== user.name));
       setSelected((prev) => prev.filter((u) => u.name !== user.name));
     } else if (selectedUsers.length > 0) {
-      // delete all selected
+      
       const namesToDelete = new Set(selectedUsers.map((u) => u.name));
       setData((prev) => prev.filter((e) => !namesToDelete.has(e.name)));
       setSelected([]);
@@ -572,7 +572,7 @@ const Customer = () => {
   };
   return (
     <>
-      {/* Header */}
+      
       <div className="flex items-center justify-between p-8 border-b gap-5">
         <div className="flex flex-col gap-2">
           <h1 className="text-lg font-bold">Customer</h1>
@@ -699,7 +699,7 @@ const Customer = () => {
         </Dialog>
       </div>
 
-      {/* Actions */}
+      
       <div className="flex items-center flex-wrap justify-end px-8 py-5 gap-4">
         <div className="relative">
           <Search className="absolute top-2 left-2 text-gray-500" size={20} />
@@ -733,7 +733,7 @@ const Customer = () => {
         )}
       </div>
 
-      {/* Table */}
+      
       <div className="w-full px-8">
         <Table className="table-auto w-full border-collapse border-gray-500 overflow-hidden scrollbar-hide rounded-2xl">
           <TableHeader>
@@ -994,7 +994,7 @@ const Customer = () => {
           <TableFooter></TableFooter>
         </Table>
 
-        {/* Pagination */}
+        
         <div className="flex items-center border-t justify-between px-5 py-5">
           <p className="text-sm text-gray-600">
             Showing {startIndex + 1}–{endIndex} of {totalItems} items

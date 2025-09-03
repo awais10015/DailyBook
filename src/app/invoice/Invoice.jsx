@@ -1080,8 +1080,8 @@ const Invoice = () => {
       <div className="p-8 flex flex-col gap-5">
         <h1 className="text-lg font-bold">Customer Balance Tracking</h1>
 
-        <div className="w-full flex gap-2 items-center justify-center">
-          <Card className="w-full max-w-sm">
+        <div className="w-full flex gap-2 items-center justify-center flex-wrap">
+          <Card className="w-full max-w-xs">
             <CardHeader>
               <CardTitle>
                 {" "}
@@ -1123,7 +1123,7 @@ const Invoice = () => {
               <p>12-04-24</p>
             </CardFooter>
           </Card>
-          <Card className="w-full max-w-sm">
+          <Card className="w-full max-w-xs">
             <CardHeader>
               <CardTitle>
                 {" "}
@@ -1165,7 +1165,7 @@ const Invoice = () => {
               <p>12-04-24</p>
             </CardFooter>
           </Card>
-          <Card className="w-full max-w-sm">
+          <Card className="w-full max-w-xs">
             <CardHeader>
               <CardTitle>
                 {" "}

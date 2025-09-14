@@ -27,15 +27,14 @@ const Login = () => {
   const [showPassword, setShowPassword] = React.useState(false);
   const { currentLoggedInUser, setCurrentLoggedInUser } =
     useContext(CurrentUserContext);
-
-  const [email, setemail] = useState("");
-  const [password, setpassword] = useState("");
-
   const user = {
     email: "test@test.com",
     password: "asdf",
     name: "Tester",
   };
+  const [email, setemail] = useState(user.email);
+  const [password, setpassword] = useState(user.password);
+
   useEffect(() => {
     console.log(currentLoggedInUser);
   }, [currentLoggedInUser]);
@@ -63,14 +62,19 @@ const Login = () => {
     >
       <div className="absolute inset-0 bg-black/30" />
 
-      <div className="absolute bottom-0 z-10 flex flex-col md:flex-col lg:flex-row w-full items-center justify-evenly gap-6 pt-6 px-6">
+      <div
+        className="absolute inset-0 z-10 flex flex-col lg:flex-row 
+             items-center lg:items-end 
+             justify-between lg:justify-evenly 
+             gap-6 pt-6 px-6"
+      >
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
           className="flex items-center justify-center"
         >
-          <motion.div className="relative h-[200px] w-[200px] md:h-[240px] md:w-[240px] lg:h-[400px] lg:w-[400px]">
+          <motion.div className="relative  h-[200px] w-[200px] md:h-[240px] md:w-[240px] lg:h-[400px] lg:w-[400px]">
             <Image
               src="/login/frame.svg"
               alt="logo"
@@ -85,10 +89,10 @@ const Login = () => {
           initial={{ opacity: 0, y: 50, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-          className="flex-1 h-[500px] max-w-md bg-white p-8 shadow-lg rounded-t-2xl"
+          className="flex-1  h-[500px] max-w-md bg-white p-8 shadow-lg rounded-t-2xl"
         >
           <form
-            className="flex flex-col gap-6 text-black"
+            className=" flex flex-col gap-6 text-black"
             onSubmit={handleSubmit}
           >
             <motion.div
@@ -119,6 +123,7 @@ const Login = () => {
                   onChange={(e) => setemail(e.target.value)}
                   id="email"
                   type="email"
+                  value={user.email}
                   placeholder="Enter your email"
                   className="pl-10 rounded-md border-gray-300 focus:border-[#53b700] focus:ring-2 focus:ring-[#53b700]"
                 />
@@ -142,6 +147,7 @@ const Login = () => {
                 <Input
                   onChange={(e) => setpassword(e.target.value)}
                   id="password"
+                  value={user.password}
                   type={showPassword ? "text" : "password"}
                   placeholder="Enter your password"
                   className="pl-10 pr-10 rounded-md border-gray-300 focus:border-[#53b700] focus:ring-2 focus:ring-[#53b700]"
@@ -181,7 +187,7 @@ const Login = () => {
             >
               <Button
                 type="submit"
-                className="mt-4 w-full text-white rounded-sm bg-[#53b700] hover:bg-[#469900]"
+                className="cursor-pointer mt-4 w-full text-white rounded-sm bg-[#53b700] hover:bg-[#469900]"
               >
                 Login
               </Button>

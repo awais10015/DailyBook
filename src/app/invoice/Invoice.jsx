@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   CirclePlus,
@@ -71,7 +71,7 @@ const Invoice = () => {
   const [selected, setSelected] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
-
+ const [search, setSearch] = useState("");
   const dummyData = [
     {
       name: "Leon Scott",
@@ -566,6 +566,14 @@ const Invoice = () => {
 
   const [userType, setUserType] = useState("customer");
 
+ useEffect(() => {
+    setData(
+      dummyData.filter((supplier) =>
+        supplier.name.toLowerCase().includes(search.toLowerCase())
+      )
+    );
+  }, [search]);
+
   const toggleSelect = (user) => {
     setSelected((prev) =>
       prev.includes(user)
@@ -727,7 +735,8 @@ const Invoice = () => {
       <div className="flex items-center flex-wrap justify-end px-8 py-5 gap-4">
         <div className="relative">
           <Search className="absolute top-2 left-2 text-gray-500" size={20} />
-          <Input type="text" placeholder="Search" className="px-9" />
+          <Input value={search}
+            onChange={(e) => setSearch(e.target.value)} type="text" placeholder="Search" className="px-9" />
         </div>
 
         <Button className="bg-white text-black p-3 rounded-sm border text-sm cursor-pointer hover:bg-gray-50">
@@ -767,7 +776,7 @@ const Invoice = () => {
           ${
             userType === "supplier"
               ? "bg-[#53b700] text-white hover:bg-[#53b700]/90"
-              : "bg-transparent text-black hover:bg-gray-50"
+              : "bg-transparent text-black dark:text-white dark:hover:text-black hover:bg-gray-50"
           }`}
           >
             Supplier
@@ -780,7 +789,7 @@ const Invoice = () => {
           ${
             userType === "customer"
               ? "bg-[#53b700] text-white hover:bg-[#53b700]/90"
-              : "bg-transparent text-black hover:bg-gray-50"
+              : "bg-transparent text-black dark:text-white dark:hover:text-black hover:bg-gray-50"
           }`}
           >
             Customer

@@ -20,7 +20,7 @@ const Navbar = () => {
   return (
     <>
      
-      <nav className="sticky top-0 z-20 w-full h-[70px] bg-[#53b700]/10 flex items-center px-4 justify-between">
+      <nav className="sticky top-0 z-20 w-full h-[70px] bg-[#53b700]/10 backdrop-blur-lg flex items-center px-4 justify-between">
        
         {!blurActive ? (
           <div className=" flex items-center justify-center">

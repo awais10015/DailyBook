@@ -38,11 +38,7 @@ const items = [
     url: "/invoice",
     icon: ReceiptText,
   },
-  {
-    title: "Daily Expense",
-    url: "/dailyexpense",
-    icon: Calculator,
-  },
+  
 ];
 
 export function AppSidebar() {

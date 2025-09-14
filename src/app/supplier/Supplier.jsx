@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   CirclePlus,
@@ -51,7 +51,8 @@ const Supplier = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
   const [position, setPosition] = React.useState("bottom");
- 
+  const [search, setSearch] = useState("");
+
   const dummyData = [
     {
       name: "Leon Scott",
@@ -537,7 +538,14 @@ const Supplier = () => {
 
   const [data, setData] = useState(dummyData);
 
-  
+  useEffect(() => {
+    setData(
+      dummyData.filter((supplier) =>
+        supplier.name.toLowerCase().includes(search.toLowerCase())
+      )
+    );
+  }, [search]);
+
   const totalItems = data.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
@@ -553,7 +561,6 @@ const Supplier = () => {
     );
   };
 
- 
   const handleDeselect = () => {
     setSelected([]);
   };
@@ -572,7 +579,6 @@ const Supplier = () => {
   };
   return (
     <>
-     
       <div className="flex items-center justify-between p-8 border-b gap-5">
         <div className="flex flex-col gap-2">
           <h1 className="text-lg font-bold">Supplier</h1>
@@ -699,11 +705,16 @@ const Supplier = () => {
         </Dialog>
       </div>
 
-   
       <div className="flex items-center flex-wrap justify-end px-8 py-5 gap-4">
         <div className="relative">
           <Search className="absolute top-2 left-2 text-gray-500" size={20} />
-          <Input type="text" placeholder="Search" className="px-9" />
+          <Input
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            type="text"
+            placeholder="Search"
+            className="px-9"
+          />
         </div>
 
         <Button className="bg-white text-black p-3 rounded-sm border text-sm cursor-pointer hover:bg-gray-50">
@@ -733,7 +744,6 @@ const Supplier = () => {
         )}
       </div>
 
-    
       <div className="w-full px-8">
         <Table className="table-auto w-full border-collapse border-gray-500 overflow-hidden scrollbar-hide rounded-2xl">
           <TableHeader>
@@ -966,7 +976,8 @@ const Supplier = () => {
                               Are you sure you want to Delete its Supplier?
                             </DialogTitle>
                             <DialogDescription>
-                              Deleting the supplier will delete its entire history
+                              Deleting the supplier will delete its entire
+                              history
                             </DialogDescription>
                           </DialogHeader>
 
@@ -995,7 +1006,6 @@ const Supplier = () => {
           <TableFooter></TableFooter>
         </Table>
 
-      
         <div className="flex items-center border-t justify-between px-5 py-5">
           <p className="text-sm text-gray-600">
             Showing {startIndex + 1}–{endIndex} of {totalItems} items

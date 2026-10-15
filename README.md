@@ -37,6 +37,8 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
+Site **title**, **description**, and **Open Graph** metadata are configured in `src/app/layout.tsx`. Favicons are generated from `src/app/icon.tsx` and `src/app/apple-icon.tsx` (brand green book mark).
+
 ### Demo login
 
 | Field | Value |

@@ -1,92 +1,86 @@
 "use client";
 
-import { TrendingUp } from "lucide-react";
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
-import { ResponsiveContainer } from "recharts";
 
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import {
-  ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-
-export const description = "A multiple bar chart";
-
-const chartData = [
-  { month: "January", desktop: 186, mobile: 80 },
-  { month: "February", desktop: 305, mobile: 200 },
-  { month: "March", desktop: 237, mobile: 120 },
-  { month: "April", desktop: 73, mobile: 190 },
-  { month: "May", desktop: 209, mobile: 130 },
-  { month: "June", desktop: 214, mobile: 140 },
-  { month: "July", desktop: 186, mobile: 80 },
-  { month: "August", desktop: 305, mobile: 200 },
-  { month: "September", desktop: 237, mobile: 120 },
-  { month: "October", desktop: 73, mobile: 190 },
-  { month: "November", desktop: 209, mobile: 130 },
-  { month: "December", desktop: 214, mobile: 140 },
-];
+import { cashFlowChartData } from "@/lib/dashboard-data";
 
 const chartConfig = {
-  desktop: {
-    label: "Desktop",
+  income: {
+    label: "Income",
     color: "#53b700",
   },
-  mobile: {
-    label: "Mobile",
+  expenses: {
+    label: "Expenses",
     color: "var(--chart-2)",
   },
 };
 
 export function ChartBarMultiple() {
   return (
-    <Card className="h-100 bg-[#53b700]/10">
+    <Card className="border shadow-sm">
       <CardHeader>
-        <h3 className="text-sm">CASH FLOW TRENDS</h3>
+        <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+          Cash flow trends
+        </p>
         <CardTitle className="text-xl">Track how your money is doing</CardTitle>
-        <CardDescription>Seeing how money flows over time can help you plan for the future.</CardDescription>
+        <CardDescription>
+          Monthly income compared to expenses across the year.
+        </CardDescription>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={chartConfig}>
-          <div className="w-full h-60">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart
-                data={chartData}
-                margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
-              >
-                <CartesianGrid vertical={false} horizontal={false} />
-                <XAxis
-                  dataKey="month"
-                  tickLine={false}
-                  tickMargin={5}
-                  axisLine={false}
-                  tickFormatter={(value) => value.slice(0, 3)}
-                />
-                <YAxis
-                  domain={[0, 600]}
-                  tickLine={false}
-                  axisLine={false}
-                  tickMargin={5}
-                  allowDecimals={false}
-                />
-                <ChartTooltip
-                  cursor={false}
-                  content={<ChartTooltipContent indicator="dashed" />}
-                />
-                <Bar dataKey="desktop" fill="var(--color-desktop)" radius={2} />
-                <Bar dataKey="mobile" fill="var(--color-mobile)" radius={2} />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
+        <ChartContainer
+          config={chartConfig}
+          className="aspect-auto h-72 w-full min-h-[280px]"
+        >
+          <BarChart
+            data={cashFlowChartData}
+            margin={{ top: 8, right: 8, bottom: 0, left: 0 }}
+          >
+            <CartesianGrid
+              vertical={false}
+              strokeDasharray="3 3"
+              className="stroke-border/60"
+            />
+            <XAxis
+              dataKey="month"
+              tickLine={false}
+              tickMargin={8}
+              axisLine={false}
+            />
+            <YAxis
+              tickLine={false}
+              axisLine={false}
+              tickMargin={8}
+              allowDecimals={false}
+              tickFormatter={(v) => `$${v / 1000}k`}
+            />
+            <ChartTooltip
+              cursor={{ fill: "var(--muted)", opacity: 0.3 }}
+              content={<ChartTooltipContent indicator="dashed" />}
+            />
+            <Bar
+              dataKey="income"
+              fill="var(--color-income)"
+              radius={[4, 4, 0, 0]}
+            />
+            <Bar
+              dataKey="expenses"
+              fill="var(--color-expenses)"
+              radius={[4, 4, 0, 0]}
+            />
+          </BarChart>
         </ChartContainer>
       </CardContent>
     </Card>

@@ -1,125 +1,106 @@
 "use client";
 
-import React from "react";
-import { motion } from "framer-motion";
-
-
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
+import React, { useContext } from "react";
+import Link from "next/link";
+import {
+  Receipt,
+  CheckCircle2,
+  Clock3,
+  CircleX,
+  Plus,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { ChartBarMultiple } from "@/components/charts/ChartBar";
 import { ChartPieLegend } from "@/components/charts/ChartPie";
 import { CustomerTable } from "@/components/table/Table";
-
-
-const containerVariants = {
-  hidden: {},
-  show: {
-    transition: {
-      staggerChildren: 0.15,
-    },
-  },
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 20, scale: 0.95 },
-  show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.5 } },
-};
-
-const sectionVariants = {
-  hidden: { opacity: 0, y: 30 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-};
+import { StatCard } from "@/components/dashboard/StatCard";
+import CurrentUserContext from "@/context/CurrentUserContext";
+import {
+  dashboardInvoices,
+  getInvoiceStats,
+} from "@/lib/dashboard-data";
 
 const Dashboard = () => {
+  const { currentLoggedInUser } = useContext(CurrentUserContext);
+  const name = currentLoggedInUser?.name || "there";
+  const stats = getInvoiceStats(dashboardInvoices);
+
+  const statItems = [
+    {
+      label: "Total invoices",
+      value: stats.total,
+      icon: Receipt,
+      accentClass: "bg-orange-500/10 text-orange-600 dark:text-orange-400",
+    },
+    {
+      label: "Completed",
+      value: stats.completed,
+      icon: CheckCircle2,
+      accentClass: "bg-[var(--brand)]/10 text-[var(--brand)]",
+    },
+    {
+      label: "Pending",
+      value: stats.pending,
+      icon: Clock3,
+      accentClass: "bg-sky-500/10 text-sky-600 dark:text-sky-400",
+    },
+    {
+      label: "Unpaid",
+      value: stats.canceled,
+      icon: CircleX,
+      accentClass: "bg-rose-500/10 text-rose-600 dark:text-rose-400",
+    },
+  ];
+
   return (
-    <motion.div
-      className="w-full p-4 md:p-6 space-y-6"
-      variants={containerVariants}
-      initial="hidden"
-      animate="show"
-    >
-   
-      <motion.div
-        className="w-full flex flex-wrap gap-4 items-center justify-center"
-        variants={containerVariants}
-      >
-        
-          <motion.div className="flex gap-2 flex-wrap">
-            <Card className=" w-[200px] rounded-md bg-[#f0790f]/15">
-              <CardHeader>
-                <CardTitle>
-                  <div className="text-center">
-                    <h1 className="font-semibold text-sm">Total Invoices</h1>
-                    <p className="text-lg font-bold">0</p>
-                  </div>
-                </CardTitle>
-              </CardHeader>
-            </Card>
-
-            <Card className=" w-[200px] rounded-md bg-[#53b700]/15">
-              <CardHeader>
-                <CardTitle>
-                  <div className="text-center">
-                    <h1 className="font-semibold text-sm">
-                      Completed Invoices
-                    </h1>
-                    <p className="text-lg font-bold">0</p>
-                  </div>
-                </CardTitle>
-              </CardHeader>
-            </Card>
-
-            <Card className=" w-[200px] rounded-md bg-[#a8c5da]/15">
-              <CardHeader>
-                <CardTitle>
-                  <div className="text-center">
-                    <h1 className="font-semibold text-sm">Pending Invoices</h1>
-                    <p className="text-lg font-bold">0</p>
-                  </div>
-                </CardTitle>
-              </CardHeader>
-            </Card>
-
-            <Card className=" w-[200px] rounded-md bg-[#ef1775]/15">
-              <CardHeader>
-                <CardTitle>
-                  <div className="text-center">
-                    <h1 className="font-semibold text-sm">Canceled Invoices</h1>
-                    <p className="text-lg font-bold">0</p>
-                  </div>
-                </CardTitle>
-              </CardHeader>
-            </Card>
-          </motion.div>
-        
-      </motion.div>
-
-      <motion.div className="flex flex-col gap-4" variants={sectionVariants}>
-        <div className="flex flex-col gap-2">
-          <h1 className="text-xl font-bold">Welcome to DailyBook</h1>
-          <p className="text-sm text-gray-500">
-            Get the seamless, secure and swift payments made simple
+    <div className="mx-auto w-full max-w-7xl space-y-8 p-4 md:p-6">
+      <header className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div className="space-y-1">
+          <h1 className="text-2xl font-semibold tracking-tight md:text-3xl">
+            Hello, {name}
+          </h1>
+          <p className="text-sm text-muted-foreground md:text-base">
+            Here&apos;s how your business is performing this month.
           </p>
         </div>
-        <div className="w-full">
-          <ChartBarMultiple />
-        </div>
-      </motion.div>
+        <Button
+          asChild
+          className="shrink-0 bg-[var(--brand)] text-white hover:bg-[var(--brand-hover)]"
+        >
+          <Link href="/invoice">
+            <Plus className="h-4 w-4" />
+            New invoice
+          </Link>
+        </Button>
+      </header>
 
-    
-      <motion.div
-        className="flex flex-col lg:flex-row gap-6 w-full"
-        variants={sectionVariants}
+      <section
+        className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4"
+        aria-label="Invoice summary"
       >
-        <div className="w-full lg:w-1/2">
-          <ChartPieLegend />
-        </div>
-        <div className="w-full lg:w-1/2 overflow-x-auto">
-          <CustomerTable />
-        </div>
-      </motion.div>
-    </motion.div>
+        {statItems.map((item) => (
+          <StatCard
+            key={item.label}
+            icon={item.icon}
+            label={item.label}
+            value={item.value}
+            accentClass={item.accentClass}
+          />
+        ))}
+      </section>
+
+      <section aria-label="Cash flow">
+        <ChartBarMultiple />
+      </section>
+
+      <section
+        className="grid grid-cols-1 gap-6 lg:grid-cols-2"
+        aria-label="Expenses and recent invoices"
+      >
+        <ChartPieLegend />
+        <CustomerTable />
+      </section>
+    </div>
   );
 };
 

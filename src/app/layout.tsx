@@ -3,7 +3,7 @@
 
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { SidebarProvider } from "@/components/ui/sidebar";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import Navbar from "@/components/Navbar";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -29,7 +29,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const pathname = usePathname();
-  const authPages = ["/login", "/newpassword", "/forgotpassword"];
+  const authPages = [
+    "/login",
+    "/register",
+    "/newpassword",
+    "/forgotpassword",
+  ];
 const isAuthPage = authPages.includes(pathname);
 
   return (
@@ -45,12 +50,18 @@ const isAuthPage = authPages.includes(pathname);
             disableTransitionOnChange
           >
             <SidebarProvider>
-              <NextTopLoader color="#53b700" showSpinner={false}/>
-              {!isAuthPage && <AppSidebar />}
-              <main className="w-full">
-                {!isAuthPage && <Navbar />}
-                {children}
-              </main>
+              <NextTopLoader color="#53b700" showSpinner={false} />
+              {!isAuthPage ? (
+                <>
+                  <AppSidebar />
+                  <SidebarInset>
+                    <Navbar />
+                    {children}
+                  </SidebarInset>
+                </>
+              ) : (
+                children
+              )}
             </SidebarProvider>
           </ThemeProvider>
         </CurrentUserContextProvider>

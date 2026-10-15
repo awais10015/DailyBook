@@ -1,22 +1,27 @@
 "use client";
-import React from "react";
-import { deleteCookie } from "cookies-next";
-import { Button } from "./ui/button";
+
+import React, { useContext } from "react";
 import { useRouter } from "next/navigation";
+import { Button } from "./ui/button";
+import CurrentUserContext from "@/context/CurrentUserContext";
+import { clearAuthSession } from "@/lib/logout";
 
 const Logout = () => {
   const router = useRouter();
+  const { setCurrentLoggedInUser } = useContext(CurrentUserContext);
+
   const handleLogout = () => {
-    deleteCookie("token");
-
-    localStorage.removeItem("token");
-
+    clearAuthSession();
+    setCurrentLoggedInUser({});
     router.push("/login");
   };
+
   return (
     <Button
+      variant="outline"
+      size="sm"
       onClick={handleLogout}
-      className="cursor-pointer bg-[#53b700] hover:bg-[#53b700] text-white rounded-sm"
+      className="border-[var(--brand)]/30 text-[var(--brand)] hover:bg-[var(--brand)]/10"
     >
       Logout
     </Button>

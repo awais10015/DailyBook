@@ -1,64 +1,69 @@
 "use client";
-import React, { useState } from "react";
-import { Menu, Eye, EyeOff } from "lucide-react";
-import { SidebarTrigger } from "./ui/sidebar"; 
-import { ModeToggle } from "./ModeToggle";
+
+import React from "react";
+import Link from "next/link";
+import { ChevronRight } from "lucide-react";
+import { SidebarTrigger } from "./ui/sidebar";
+import { Separator } from "@/components/ui/separator";
 import { usePathname } from "next/navigation";
-import Logout from "@/components/Logout"
+import UserNav from "@/components/UserNav";
+import { ModeToggle } from "@/components/ModeToggle";
+
+const PAGE_TITLES = {
+  dashboard: "Dashboard",
+  customer: "Customers",
+  supplier: "Suppliers",
+  invoice: "Invoices",
+};
+
+function getPageTitle(pathname) {
+  if (pathname === "/") return "Home";
+  const segment = pathname.replace(/^\//, "").split("/")[0];
+  return PAGE_TITLES[segment] || segment.replace(/\b\w/g, (c) => c.toUpperCase());
+}
 
 const Navbar = () => {
-  const [blurActive, setBlurActive] = useState(false);
   const pathname = usePathname();
-  const pageName =
-    pathname === "/"
-      ? "Home"
-      : pathname
-          .replace("/", "")
-          .replace("-", " ")
-          .replace(/\b\w/g, (c) => c.toUpperCase()); 
+  const pageTitle = getPageTitle(pathname);
+  const isDashboardHome = pathname === "/dashboard";
 
   return (
-    <>
-     
-      <nav className="sticky top-0 z-20 w-full h-[70px] bg-[#53b700]/10 backdrop-blur-lg flex items-center px-4 justify-between">
-       
-        {!blurActive ? (
-          <div className=" flex items-center justify-center">
-            <SidebarTrigger className="size-8" />
-          
-            <div className="text-sm font-semibold text-gray-600 dark:text-white">
-              Home {} {} / {} {} {pageName}
-            </div>
-          </div>
+    <header
+      className="sticky top-0 z-30 flex h-14 shrink-0 items-center gap-2 border-b border-border bg-background/80 px-4 backdrop-blur-md md:px-6"
+    >
+      <SidebarTrigger className="-ml-1" />
+      <Separator orientation="vertical" className="mr-2 h-4" />
+      <nav aria-label="Breadcrumb" className="flex min-w-0 flex-1 items-center gap-1.5 text-sm">
+        <Link
+          href="/dashboard"
+          className="shrink-0 text-muted-foreground transition-colors hover:text-foreground"
+        >
+          Home
+        </Link>
+        <ChevronRight className="h-3.5 w-3.5 shrink-0 text-muted-foreground" aria-hidden />
+        {isDashboardHome ? (
+          <span className="truncate font-medium text-foreground">{pageTitle}</span>
         ) : (
-          <div></div>
-        )}
-
-        <div className="flex items-center gap-4">
-          <button
-            onClick={() => setBlurActive(!blurActive)}
-            className="p-2 cursor-pointer rounded-full hover:bg-white/20"
-          >
-            {blurActive ? <EyeOff size={20} /> : <Eye size={20} />}
-          </button>
-
-          <ModeToggle />
-
-          <div className="flex items-center gap-2">
-            <img
-              src="https://randomuser.me/api/portraits/men/32.jpg"
-              alt="Admin Avatar"
-              className="w-8 h-8 rounded-full object-cover"
+          <>
+            <Link
+              href="/dashboard"
+              className="hidden shrink-0 text-muted-foreground transition-colors hover:text-foreground sm:inline"
+            >
+              Dashboard
+            </Link>
+            <ChevronRight
+              className="hidden h-3.5 w-3.5 shrink-0 text-muted-foreground sm:inline"
+              aria-hidden
             />
-          </div>
-          <Logout/>
-        </div>
+            <span className="truncate font-medium text-foreground">{pageTitle}</span>
+          </>
+        )}
       </nav>
-
-      {blurActive && (
-        <div className="fixed inset-0 z-10 backdrop-blur-lg bg-black/20"></div>
-      )}
-    </>
+      <div className="ml-auto flex items-center gap-1">
+        <ModeToggle />
+        <UserNav />
+      </div>
+    </header>
   );
 };
 

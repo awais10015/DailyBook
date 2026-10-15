@@ -1,21 +1,20 @@
 "use client";
+
 import React, { useContext, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import CurrentUserContext from "@/context/CurrentUserContext";
 import Loader from "@/components/Loader";
 
+const DEMO_USER = {
+  email: "test@test.com",
+  password: "asdf",
+  name: "Tester",
+};
+
 const Page = () => {
   const router = useRouter();
   const { currentLoggedInUser, setCurrentLoggedInUser } =
     useContext(CurrentUserContext);
-
- 
-  const user = {
-    email: "test@test.com",
-    password: "asdf",
-    name: "Tester",
-  };
-
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -24,10 +23,9 @@ const Page = () => {
       token &&
       (!currentLoggedInUser || Object.keys(currentLoggedInUser).length === 0)
     ) {
-     
-      setCurrentLoggedInUser(user);
+      setCurrentLoggedInUser(DEMO_USER);
     }
-  }, []);
+  }, [currentLoggedInUser, setCurrentLoggedInUser]);
 
   useEffect(() => {
     if (!currentLoggedInUser || Object.keys(currentLoggedInUser).length === 0) {
@@ -45,7 +43,7 @@ const Page = () => {
     );
   }
 
-  return null; 
+  return null;
 };
 
 export default Page;
